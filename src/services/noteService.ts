@@ -1,0 +1,66 @@
+import type { Note, NoteTag } from "../types/note";
+
+import axios from "axios";
+
+const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
+
+interface FetchNotesParams {
+  page: number;
+  search?: string;
+  perPage: number;
+  tag?: string;
+  sortby?: "created" | "updated";
+}
+
+interface FetchNotesResponse {
+  notes: Note[];
+  totalPages: number;
+  page: number;
+  perPage: number;
+  totalItems: number;
+}
+
+interface CreateNoteData {
+  title: string;
+  content: string;
+  tag: NoteTag;
+}
+
+const api = axios.create({
+  baseURL: "https://notehub-public.goit.study/api",
+});
+
+export async function fetchNotes({
+  page,
+  search,
+  perPage,
+  tag,
+  sortby,
+}: FetchNotesParams): Promise<FetchNotesResponse> {
+  const response = await api.get<FetchNotesResponse>("/notes", {
+    params: {
+      page,
+      search,
+      perPage,
+      tag,
+      sortby,
+    },
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+    },
+  });
+  return response.data;
+}
+
+// Cоздание заметки
+export async function createNote(noteData: CreateNoteData): Promise<Note> {
+  const response = await api.post<Note>("/notes", noteData);
+  return response.data;
+}
+
+// Удаление заметки по ІД
+
+export async function deleteNote(id: string): Promise<Note> {
+  const response = await api.delete<Note>(`/notes/${id}`);
+  return response.data;
+}
