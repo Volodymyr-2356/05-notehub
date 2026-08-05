@@ -54,13 +54,21 @@ export async function fetchNotes({
 
 // Cоздание заметки
 export async function createNote(noteData: CreateNoteData): Promise<Note> {
-  const response = await api.post<Note>("/notes", noteData);
+  const response = await api.post<Note>("/notes", noteData, {
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+    },
+  });
   return response.data;
 }
 
 // Удаление заметки по ІД
 
 export async function deleteNote(id: string): Promise<Note> {
-  const response = await api.delete<Note>(`/notes/${id}`);
+  const response = await api.delete<Note>(`/notes/${id}`, {
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+    },
+  });
   return response.data;
 }

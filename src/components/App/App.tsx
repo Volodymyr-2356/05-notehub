@@ -7,14 +7,22 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Modal from "../Modal/Modal";
 import NoteForm from "../NoteForm/NoteForm";
+import { useDebouncedCallback } from "use-debounce";
 
 export function App() {
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [search, setSearch] = useState("");
+
+  //пошук реалізовуємо
+
+  const handleSearch = useDebouncedCallback((value: string) => {
+    setSearch(value);
+  }, 300);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["notes", page],
-    queryFn: () => fetchNotes({ page, search: "", perPage: 12 }),
+    queryKey: ["notes", page, search],
+    queryFn: () => fetchNotes({ page, search, perPage: 12 }),
   });
   console.log(data);
   if (isLoading) {
@@ -26,7 +34,7 @@ export function App() {
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
-        <SearchBox></SearchBox>
+        <SearchBox onSearch={handleSearch}></SearchBox>
         <Pagination
           page={page}
           totalPages={data.totalPages}
@@ -37,7 +45,7 @@ export function App() {
         </button>
         {isModalOpen && (
           <Modal onClose={() => setIsModalOpen(false)}>
-            <NoteForm></NoteForm>
+            <NoteForm onclose={() => setIsModalOpen(false)}></NoteForm>
           </Modal>
         )}
       </header>
