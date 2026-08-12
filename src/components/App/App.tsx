@@ -35,16 +35,17 @@ export function App() {
         {isLoading && <p>Loading...</p>}
 
         {error && <p>Error</p>}
-        {data && (
+        <button className={css.button} onClick={() => setIsModalOpen(true)}>
+          Create note +
+        </button>
+        {data && data.totalPages > 1 && (
           <Pagination
             page={page}
             totalPages={data.totalPages}
             onPageChange={setPage}
           />
         )}
-        <button className={css.button} onClick={() => setIsModalOpen(true)}>
-          Create note +
-        </button>
+
         {isModalOpen && (
           <Modal onClose={() => setIsModalOpen(false)}>
             <NoteForm onClose={() => setIsModalOpen(false)}></NoteForm>
@@ -53,6 +54,7 @@ export function App() {
       </header>
 
       {data && data.notes.length > 0 && <NoteList notes={data.notes} />}
+      {data && data.notes.length === 0 && <p>Notes not Found</p>}
     </div>
   );
 }

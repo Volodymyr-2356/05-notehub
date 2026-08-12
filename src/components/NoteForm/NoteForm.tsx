@@ -21,9 +21,9 @@ interface NoteFormValues {
 const OrderFormSchema = Yup.object().shape({
   title: Yup.string()
     .min(3, "Title must be at least 3 characters")
-    .max(50, "Title is so long")
-    .required("Titile is required"),
-  content: Yup.string().max(500, "Title is so long"),
+    .max(50, "Title is too long")
+    .required("Title is required"),
+  content: Yup.string().max(500, "Content is too long"),
   tag: Yup.string()
     .oneOf(["Todo", "Work", "Personal", "Meeting", "Shopping"])
     .required("Tag is required"),
