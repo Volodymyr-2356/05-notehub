@@ -2,22 +2,19 @@ import type { Note, NoteTag } from "../types/note";
 
 import axios from "axios";
 
-const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
+const TOKEN = import.meta.env.VITE_NOTEHUB_TOKEN;
 
 interface FetchNotesParams {
   page: number;
   search?: string;
   perPage: number;
   tag?: string;
-  sortby?: "created" | "updated";
+  sortBy?: "created" | "updated";
 }
 
 interface FetchNotesResponse {
   notes: Note[];
   totalPages: number;
-  page: number;
-  perPage: number;
-  totalItems: number;
 }
 
 interface CreateNoteData {
@@ -35,7 +32,7 @@ export async function fetchNotes({
   search,
   perPage,
   tag,
-  sortby,
+  sortBy,
 }: FetchNotesParams): Promise<FetchNotesResponse> {
   const response = await api.get<FetchNotesResponse>("/notes", {
     params: {
@@ -43,7 +40,7 @@ export async function fetchNotes({
       search,
       perPage,
       tag,
-      sortby,
+      sortBy,
     },
     headers: {
       Authorization: `Bearer ${TOKEN}`,

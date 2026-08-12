@@ -24,6 +24,7 @@ export function App() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["notes", page, search],
     queryFn: () => fetchNotes({ page, search, perPage: 12 }),
+    placeholderData: (previousValues) => previousValues,
   });
   console.log(data);
 
@@ -46,7 +47,7 @@ export function App() {
         </button>
         {isModalOpen && (
           <Modal onClose={() => setIsModalOpen(false)}>
-            <NoteForm onclose={() => setIsModalOpen(false)}></NoteForm>
+            <NoteForm onClose={() => setIsModalOpen(false)}></NoteForm>
           </Modal>
         )}
       </header>
