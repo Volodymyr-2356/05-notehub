@@ -92,7 +92,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
         </div>
 
         <div className={css.actions}>
-          <button type="button" onClick={onclose} className={css.cancelButton}>
+          <button type="button" onClick={onClose} className={css.cancelButton}>
             Cancel
           </button>
           <button type="submit" className={css.submitButton}>
