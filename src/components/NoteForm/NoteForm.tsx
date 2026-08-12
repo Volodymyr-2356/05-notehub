@@ -1,6 +1,6 @@
 import { useId } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import type { Note } from "../../types/note";
+
 import css from "./NoteForm.module.css";
 import * as Yup from "yup";
 import { createNote } from "../../services/noteService";

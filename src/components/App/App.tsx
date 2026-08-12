@@ -18,6 +18,7 @@ export function App() {
 
   const handleSearch = useDebouncedCallback((value: string) => {
     setSearch(value);
+    setPage(1);
   }, 300);
 
   const { data, isLoading, error } = useQuery({
@@ -25,21 +26,21 @@ export function App() {
     queryFn: () => fetchNotes({ page, search, perPage: 12 }),
   });
   console.log(data);
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-  if (error) {
-    return <p>Eroor</p>;
-  }
+
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
         <SearchBox onSearch={handleSearch}></SearchBox>
-        <Pagination
-          page={page}
-          totalPages={data.totalPages}
-          onPageChange={setPage}
-        />
+        {isLoading && <p>Loading...</p>}
+
+        {error && <p>Error</p>}
+        {data && (
+          <Pagination
+            page={page}
+            totalPages={data.totalPages}
+            onPageChange={setPage}
+          />
+        )}
         <button className={css.button} onClick={() => setIsModalOpen(true)}>
           Create note +
         </button>
