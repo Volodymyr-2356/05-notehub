@@ -10,6 +10,14 @@ interface NoteFormProps {
   onclose: () => void;
 }
 
+type NoteTag = "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
+
+interface NoteFormValues {
+  title: string;
+  content: string;
+  tag: NoteTag;
+}
+
 const OrderFormSchema = Yup.object().shape({
   title: Yup.string()
     .min(3, "Title must be at least 3 characters")
@@ -25,7 +33,7 @@ export default function NoteForm({ onclose }: NoteFormProps) {
   const queryClient = useQueryClient();
   const fieldId = useId();
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values: NoteFormValues) => {
     await createNote(values);
 
     await queryClient.invalidateQueries({
