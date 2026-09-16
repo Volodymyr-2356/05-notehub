@@ -1,77 +1,195 @@
-# React + TypeScript + Vite
+# NoteHub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A note management web application built with **Next.js** and **TypeScript** as part of my GoIT Full Stack Developer training.
 
-Currently, two official plugins are available:
+The application allows users to browse, search, filter, create, edit, and delete notes through a REST API.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Live Demo
 
-## React Compiler
+Add your deployed application URL here:
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```text
+https://your-notehub-demo.vercel.app
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠 Technologies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+* **Next.js**
+* **React**
+* **TypeScript**
+* **TanStack Query**
+* **Axios**
+* **Formik**
+* **Yup**
+* **React Paginate**
+* **use-debounce**
+* **Zustand**
+* **REST API**
+* **CSS Modules**
+* **Vercel**
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## ✨ Features
 
+* Display a list of notes
+* Search notes
+* Filter notes by tag
+* Pagination
+* View a single note
+* Create a new note
+* Edit an existing note
+* Delete notes
+* Loading states
+* Error handling
+* Responsive interface
+* Save note drafts in `localStorage`
+
+## 🔎 Search & Filtering
+
+The application provides note search with a **300 ms debounce** to avoid unnecessary API requests while the user is typing.
+
+Notes can also be filtered by tags:
+
+* Todo
+* Work
+* Personal
+* Meeting
+* Shopping
+
+The `All` option displays notes without applying a tag filter.
+
+## 📄 Pagination
+
+Notes are displayed using pagination with **12 notes per page**.
+
+The pagination state is synchronized with the application's data-fetching logic.
+
+## ⚡ Data Fetching
+
+The project uses **TanStack Query** for server-state management.
+
+It handles:
+
+* Fetching notes
+* Fetching individual notes
+* Creating notes
+* Updating notes
+* Deleting notes
+* Loading and error states
+* Query caching
+* Query invalidation
+
+The application also uses **prefetching and HydrationBoundary** to improve the integration between server-side rendering and client-side data fetching.
+
+## 💾 Draft Persistence
+
+An unfinished note can be saved as a draft in `localStorage`.
+
+This allows the user to restore the draft after refreshing the page instead of losing the entered content.
+
+## 🧭 Routing
+
+The application uses the Next.js App Router with dynamic and catch-all routes.
+
+Examples:
+
+```text
+/notes
+/notes/[id]
+/notes/filter/[...slug]
 ```
+
+The routing structure allows notes to be displayed, filtered, and accessed individually.
+
+## 📁 Main Project Structure
+
+```text
+app/
+├── notes/
+│   ├── page.tsx
+│   ├── loading.tsx
+│   ├── [id]/
+│   └── filter/
+│       └── [...slug]/
+│
+components/
+├── Notes/
+├── NoteForm/
+├── Pagination/
+└── ...
+
+lib/
+├── api/
+└── store/
+
+types/
+└── note.ts
+```
+
+## ⚙️ Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Volodymyr-2356/05-notehub.git
+```
+
+Navigate to the project directory:
+
+```bash
+cd 05-notehub
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+## 🔧 Environment Variables
+
+Create a `.env` file and add the API configuration required by the project.
+
+```env
+NEXT_PUBLIC_API_URL=your_api_url
+```
+
+## ▶️ Run Locally
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Open:
+
+```text
+http://localhost:3000
+```
+
+## 📚 What I Practiced
+
+This project helped me practice:
+
+* Next.js App Router
+* Dynamic routes
+* Catch-all routes
+* Server and client components
+* REST API integration
+* TanStack Query
+* Server-side data prefetching
+* HydrationBoundary
+* Query caching and invalidation
+* Debounced search
+* Pagination
+* Form validation
+* LocalStorage persistence
+* TypeScript
+* Responsive UI development
+* Vercel deployment
+
+## 👨‍💻 Author
+
+**Volodymyr**
+
+Junior Frontend Developer
